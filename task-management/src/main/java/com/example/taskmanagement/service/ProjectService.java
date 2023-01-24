@@ -31,4 +31,31 @@ public class ProjectService {
         }
         return project;
     }
+
+    // find all project
+    public Iterable<Project> findAllProjects() {
+        return projectRepository.findAll();
+    }
+
+    // delete project by identifier
+    public void deleteProjectByIdentifier(String projectId) {
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+
+        if (project == null) {
+            throw new ProjectIdException("Can not delete Project with this " + projectId + " !. This project does not exist,");
+        }
+
+        projectRepository.delete(project);
+    }
+
+    // update project by id
+    public void updateProject(String projectId) {
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+
+        if (project == null) {
+            throw new ProjectIdException("Can not update Project with this " + projectId + " !. This project does not exist,");
+        }
+
+        projectRepository.save(project);
+    }
 }
