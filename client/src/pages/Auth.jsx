@@ -4,7 +4,9 @@ import Login from "../components/auth/Login";
 import Signup from "../components/auth/Signup";
 import { DiJira } from "react-icons/di";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { AiFillGithub } from "react-icons/ai";
+import { BiHomeSmile } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const Auth = () => {
     // state
@@ -15,10 +17,28 @@ const Auth = () => {
             width="100%"
             justify="space-between"
             direction={signup ? "row-reverse" : "row"}
+            position="relative"
         >
-            <Box display={{ md: "flex", base: "none" }} width="100%">
-                1
-            </Box>
+            {/* home button  */}
+            {signup ? (
+                <Box position="absolute" top={5} right={5}>
+                    <Link to="/" className="link">
+                        <Box display="flex" alignItems="center" gap={2}>
+                            <BiHomeSmile /> Back to home
+                        </Box>
+                    </Link>
+                </Box>
+            ) : (
+                <Box position="absolute" top={5} left={5}>
+                    <Link to="/" className="link">
+                        <Box display="flex" alignItems="center" gap={2}>
+                            <BiHomeSmile /> Back to home
+                        </Box>
+                    </Link>
+                </Box>
+            )}
+
+            <Box display={{ md: "flex", base: "none" }} width="100%"></Box>
             <Center bg="white" width="100%">
                 <Stack
                     align="center"
@@ -31,6 +51,7 @@ const Auth = () => {
                         {signup ? "Sign up" : "Log in"}
                     </Text>
                     {/* social media login  */}
+                    {/* toto  */}
                     <Box
                         display="flex"
                         flexDirection="column"
@@ -49,7 +70,7 @@ const Auth = () => {
                             Google
                         </Button>
                         <Button
-                            leftIcon={<FaFacebook color="#4267B2" size={20} />}
+                            leftIcon={<AiFillGithub color="black" size={20} />}
                             bg="blackAlpha.200"
                             width="300px"
                             _hover={{ bg: "blackAlpha.100" }}
@@ -57,7 +78,7 @@ const Auth = () => {
                             px={4}
                             py={2}
                         >
-                            Facebook
+                            Github
                         </Button>
                     </Box>
                     <Text

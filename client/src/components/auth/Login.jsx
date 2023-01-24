@@ -137,7 +137,7 @@ const Login = ({ signup }) => {
                             color="white"
                             _hover={{ bg: "blue.500" }}
                         >
-                            {signup ? "Signup" : "Login"}
+                            {signup ? "Sign up" : "Login"}
                         </Button>
                     </Stack>
                 </form>
