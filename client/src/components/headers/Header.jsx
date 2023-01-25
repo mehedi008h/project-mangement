@@ -23,7 +23,6 @@ const Header = () => {
             bg="blackAlpha.600"
             borderRadius={10}
             marginTop="10px"
-            marginRight="15px"
         >
             <InputGroup width="40%" borderRadius={"full"}>
                 <InputLeftElement
