@@ -1,8 +1,8 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
-import { Dashboard, Header, Sidebar } from "../components";
+import { Header, Project, Sidebar } from "../components";
 
-const Home = () => {
+const Projects = () => {
     return (
         <Flex gap={3}>
             <Box display={{ md: "flex", base: "none" }} width="300px">
@@ -10,10 +10,10 @@ const Home = () => {
             </Box>
             <Box width="100%">
                 <Header />
-                <Dashboard />
+                <Project />
             </Box>
         </Flex>
     );
 };
 
-export default Home;
+export default Projects;
