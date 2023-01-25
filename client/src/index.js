@@ -4,12 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <ChakraProvider>
-        <App />
-    </ChakraProvider>
+    <Provider store={store}>
+        <ChakraProvider>
+            <App />
+        </ChakraProvider>
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
