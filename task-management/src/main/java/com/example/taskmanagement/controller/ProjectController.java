@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/project")
+@CrossOrigin("*")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -21,6 +22,7 @@ public class ProjectController {
     // create project
     @PostMapping
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
+        System.out.println("Hello");
 
         ResponseEntity<?> errorMap = validationErrorService.ValidationService(result);
         if (errorMap != null) return errorMap;

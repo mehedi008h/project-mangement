@@ -1,21 +1,28 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const projectServices = createApi({
-    reducerPath: "projects",
-    baseQuery: fetchBaseQuery({
-        baseUrl: "https://",
-    }),
-    tagTypes: ["projects"],
-    endpoints: (builder) => ({
-        allProjects: builder.query({
-            query: () => ({
-                url: `porject`,
-                method: "GET",
-            }),
-            providesTags: ["projects"],
-        }),
-    }),
-});
-
-export const { useAllProjectsQuery } = projectServices;
-export default projectServices;
+export const createProject = createAsyncThunk(
+    "project/createProject",
+    async (projectData, thunkApi) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            };
+            const response = await axios.post(
+                "/api/v1/project",
+                projectData,
+                config
+            );
+            console.log("Project Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);

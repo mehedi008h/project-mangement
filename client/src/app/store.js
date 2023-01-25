@@ -1,11 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import projectServices from "./service/projectService";
+import { projectReducer } from "./features/projectSlice";
 
 export const store = configureStore({
     reducer: {
-        [projectServices.reducerPath]: projectServices.reducer,
+        project: projectReducer,
     },
-
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([projectServices.middleware]),
 });

@@ -9,9 +9,12 @@ import {
     Stack,
     Textarea,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import { createProject } from "../../app/service/projectService";
 
 // Creating schema
 const schema = Yup.object().shape({
@@ -25,15 +28,33 @@ const schema = Yup.object().shape({
 });
 
 const NewProject = () => {
+    const { success, loading, error } = useSelector((state) => state.project);
+
+    const dispatch = useDispatch();
+
+    // handle error
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+
+        if (success) {
+            toast.success("Project created successfully 😎");
+        }
+    }, [error, success]);
     return (
         <Formik
             validationSchema={schema}
             initialValues={{
-                email: "",
-                password: "",
+                projectName: "",
+                projectIdentifier: "",
+                description: "",
+                start_date: "",
+                end_date: "",
             }}
             onSubmit={(values) => {
-                console.log(values);
+                console.log("project Data: ", values);
+                dispatch(createProject(values));
             }}
         >
             {({
@@ -134,6 +155,7 @@ const NewProject = () => {
                                 bg="blue.600"
                                 color="white"
                                 _hover={{ bg: "blue.500" }}
+                                isLoading={loading}
                             >
                                 Create Project
                             </Button>
