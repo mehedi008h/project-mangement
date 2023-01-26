@@ -3,35 +3,33 @@ package com.example.taskmanagement.modal;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
+@ToString
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Project {
+public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Project name is required!")
-    private String projectName;
-    @NotBlank(message = "Project Identifier is required!")
-    @Size(min = 4,max = 5, message = "Please use 4 to 5 characters")
-    @Column(updatable = false, unique = true)
+    @Column(updatable = false)
+    private String projectSequence;
+    @NotBlank(message = "Please include a project summary!")
+    private String summary;
+    private String acceptanceCriteria;
+    private String status;
+    private String priority;
+    private Date dueDate;
+
+    // many to one
+    @Column(updatable = false)
     private String projectIdentifier;
-    @NotBlank(message = "Project description is required!")
-    private String description;
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date start_date;
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date end_date;
     @Column(updatable = false)
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
