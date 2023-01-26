@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface TaskRepository extends CrudRepository<Task, Long> {
     List<Task> findByProjectIdentifierOrderByPriority(String id);
+
+    // find task by project sequence
+    Task findByProjectSequence(String sequence);
 }
