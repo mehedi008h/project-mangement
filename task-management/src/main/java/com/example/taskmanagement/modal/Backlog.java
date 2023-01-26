@@ -1,12 +1,13 @@
 package com.example.taskmanagement.modal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -18,6 +19,18 @@ public class Backlog {
     private Long id;
     private Integer PTSequence = 0;
     private String projectIdentifier;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id", nullable = false)
+    @JsonIgnore
+    private Project project;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "backlog"
+    )
+    private List<Task> projectTasks = new ArrayList<>();
 
 
 }

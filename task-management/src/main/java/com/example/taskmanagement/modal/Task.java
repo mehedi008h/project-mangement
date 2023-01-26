@@ -1,6 +1,7 @@
 package com.example.taskmanagement.modal;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -28,6 +29,10 @@ public class Task {
     private Date dueDate;
 
     // many to one
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
+    @JsonIgnore
+    private Backlog backlog;
     @Column(updatable = false)
     private String projectIdentifier;
     @Column(updatable = false)

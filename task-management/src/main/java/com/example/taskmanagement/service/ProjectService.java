@@ -1,7 +1,9 @@
 package com.example.taskmanagement.service;
 
 import com.example.taskmanagement.exceptions.ProjectIdException;
+import com.example.taskmanagement.modal.Backlog;
 import com.example.taskmanagement.modal.Project;
+import com.example.taskmanagement.repository.BacklogRepository;
 import com.example.taskmanagement.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,25 @@ import org.springframework.stereotype.Service;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final BacklogRepository backlogRepository;
 
     // save & update project
     public Project saveOrUpdateProject(Project project) {
 
         try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+
+            if (project.getId() == null) {
+                Backlog backlog = new Backlog();
+                project.setBacklog(backlog);
+                backlog.setProject(project);
+                backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            }
+
+            if (project.getId() != null) {
+                project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+            }
+
             return projectRepository.save(project);
         } catch (Exception e) {
             throw new ProjectIdException("Project ID " + project.getProjectIdentifier().toUpperCase() + " already taken!");

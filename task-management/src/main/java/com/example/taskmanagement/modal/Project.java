@@ -1,6 +1,7 @@
 package com.example.taskmanagement.modal;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -37,6 +38,14 @@ public class Project {
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
+
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            mappedBy = "project"
+    )
+    @JsonIgnore
+    private Backlog backlog;
 
     @PrePersist
     protected void onCreate(){
