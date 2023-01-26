@@ -25,7 +25,7 @@ public class Task {
     private String summary;
     private String acceptanceCriteria;
     private String status;
-    private String priority;
+    private Integer priority;
     private Date dueDate;
 
     // many to one
