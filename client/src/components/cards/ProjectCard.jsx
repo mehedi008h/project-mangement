@@ -46,7 +46,12 @@ const ProjectCard = () => {
                         <TbDots size={20} />
                     </MenuButton>
                     <MenuList>
-                        <MenuItem icon={<IoAddCircleOutline />}>View</MenuItem>
+                        <Link to={`/project/${2}`}>
+                            <MenuItem icon={<IoAddCircleOutline />}>
+                                View
+                            </MenuItem>
+                        </Link>
+
                         <MenuItem icon={<IoAddCircleOutline />}>
                             Update
                         </MenuItem>

@@ -8,7 +8,7 @@ const Home = () => {
             <Box display={{ md: "flex", base: "none" }} width="300px">
                 <Sidebar />
             </Box>
-            <Box width="100%" marginRight="15px">
+            <Box className="header" marginRight="15px">
                 <Header />
                 <Dashboard />
             </Box>

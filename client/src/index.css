@@ -48,3 +48,7 @@ body {
     transform: scaleX(1);
     transform-origin: left;
 }
+
+.header {
+    width: calc(100% - 320px);
+}

@@ -4,7 +4,11 @@ import { DiJira } from "react-icons/di";
 import { RxDashboard } from "react-icons/rx";
 import { VscProject } from "react-icons/vsc";
 import { BiTask } from "react-icons/bi";
+import { BsCalendarWeek } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { RiTimerFlashLine } from "react-icons/ri";
+import { GoReport } from "react-icons/go";
+import { AiOutlineSetting } from "react-icons/ai";
 
 const Sidebar = () => {
     return (
@@ -12,9 +16,11 @@ const Sidebar = () => {
             boxShadow="lg"
             bg="blackAlpha.600"
             py={4}
-            width="100%"
+            width="300px"
+            wi
             height="100vh"
             spacing={7}
+            position="fixed"
         >
             <Box>
                 <Link to="/">
@@ -29,7 +35,7 @@ const Sidebar = () => {
                 </Link>
             </Box>
 
-            <Stack spacing={1}>
+            <Stack spacing={3}>
                 <Link to="/">
                     <Box
                         display="flex"
@@ -68,7 +74,7 @@ const Sidebar = () => {
                         <VscProject /> Projects
                     </Box>
                 </Link>
-                <Link to="/">
+                <Link to="/task">
                     <Box
                         display="flex"
                         alignItems="center"
@@ -85,6 +91,82 @@ const Sidebar = () => {
                         }}
                     >
                         <BiTask /> My Task
+                    </Box>
+                </Link>
+                <Link to="/task">
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        gap={4}
+                        px={4}
+                        py={2}
+                        fontSize={18}
+                        textTransform="uppercase"
+                        _hover={{
+                            bg: "blackAlpha.700",
+                            borderRight: "1px",
+                            borderColor: "darkcyan",
+                            color: "darkcyan",
+                        }}
+                    >
+                        <BsCalendarWeek /> Calendar
+                    </Box>
+                </Link>
+                <Link to="/task">
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        gap={4}
+                        px={4}
+                        py={2}
+                        fontSize={18}
+                        textTransform="uppercase"
+                        _hover={{
+                            bg: "blackAlpha.700",
+                            borderRight: "1px",
+                            borderColor: "darkcyan",
+                            color: "darkcyan",
+                        }}
+                    >
+                        <RiTimerFlashLine /> Time Management
+                    </Box>
+                </Link>
+                <Link to="/task">
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        gap={4}
+                        px={4}
+                        py={2}
+                        fontSize={18}
+                        textTransform="uppercase"
+                        _hover={{
+                            bg: "blackAlpha.700",
+                            borderRight: "1px",
+                            borderColor: "darkcyan",
+                            color: "darkcyan",
+                        }}
+                    >
+                        <GoReport /> Reports
+                    </Box>
+                </Link>
+                <Link to="/task">
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        gap={4}
+                        px={4}
+                        py={2}
+                        fontSize={18}
+                        textTransform="uppercase"
+                        _hover={{
+                            bg: "blackAlpha.700",
+                            borderRight: "1px",
+                            borderColor: "darkcyan",
+                            color: "darkcyan",
+                        }}
+                    >
+                        <AiOutlineSetting /> Setting
                     </Box>
                 </Link>
             </Stack>

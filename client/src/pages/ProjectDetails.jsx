@@ -1,6 +1,12 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
-import { Header, Sidebar } from "../components";
+import {
+    Header,
+    ProjectDetailsCard,
+    Sidebar,
+    TaskHeader,
+    TaskTable,
+} from "../components";
 
 const ProjectDetails = () => {
     return (
@@ -8,9 +14,11 @@ const ProjectDetails = () => {
             <Box display={{ md: "flex", base: "none" }} width="300px">
                 <Sidebar />
             </Box>
-            <Box width="100%" marginRight="15px">
+            <Box className="header" marginRight="15px">
                 <Header />
-                <h1>Project Details</h1>
+                <ProjectDetailsCard />
+                <TaskHeader />
+                <TaskTable />
             </Box>
         </Flex>
     );
