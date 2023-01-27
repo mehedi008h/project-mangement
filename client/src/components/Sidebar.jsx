@@ -2,6 +2,8 @@ import { Box, Stack } from "@chakra-ui/react";
 import React from "react";
 import { DiJira } from "react-icons/di";
 import { RxDashboard } from "react-icons/rx";
+import { VscProject } from "react-icons/vsc";
+import { BiTask } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -63,7 +65,7 @@ const Sidebar = () => {
                             color: "darkcyan",
                         }}
                     >
-                        <RxDashboard /> Projects
+                        <VscProject /> Projects
                     </Box>
                 </Link>
                 <Link to="/">
@@ -82,7 +84,7 @@ const Sidebar = () => {
                             color: "darkcyan",
                         }}
                     >
-                        <RxDashboard /> My Task
+                        <BiTask /> My Task
                     </Box>
                 </Link>
             </Stack>

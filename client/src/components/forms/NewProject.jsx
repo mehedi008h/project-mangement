@@ -27,7 +27,7 @@ const schema = Yup.object().shape({
     end_date: Yup.string().required("End date is a required field!"),
 });
 
-const NewProject = () => {
+const NewProject = ({ onClose }) => {
     const { success, loading, error } = useSelector((state) => state.project);
 
     const dispatch = useDispatch();
@@ -40,8 +40,9 @@ const NewProject = () => {
 
         if (success) {
             toast.success("Project created successfully 😎");
+            onClose();
         }
-    }, [error, success]);
+    }, [error, success, onClose]);
     return (
         <Formik
             validationSchema={schema}

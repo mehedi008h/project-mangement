@@ -6,11 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import { theme } from "./chakara/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
             <App />
         </ChakraProvider>
     </Provider>

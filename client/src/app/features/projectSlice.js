@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createProject } from "../service/projectService";
+import { createProject, getProject } from "../service/projectService";
 
 const projectSlice = createSlice({
     name: "project",
     initialState: {
         project: [],
+        projects: [],
         loading: false,
         success: false,
         error: null,
@@ -13,6 +14,7 @@ const projectSlice = createSlice({
     reducers: {
         reset: (state, action) => {
             state.project = null;
+            state.projects = null;
             state.loading = false;
             state.success = false;
             state.error = false;
@@ -33,6 +35,21 @@ const projectSlice = createSlice({
                 state.loading = false;
                 state.success = false;
                 state.project = null;
+                state.error = action.payload;
+            })
+            .addCase(getProject.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getProject.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+                state.success = true;
+                state.projects = action.payload;
+            })
+            .addCase(getProject.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.projects = null;
                 state.error = action.payload;
             });
     },

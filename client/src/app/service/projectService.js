@@ -26,3 +26,21 @@ export const createProject = createAsyncThunk(
         }
     }
 );
+
+// get all project
+export const getProject = createAsyncThunk(
+    "project/getProject",
+    async (thunkApi) => {
+        try {
+            const response = await axios.get("/api/v1/project");
+            console.log("Project Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);

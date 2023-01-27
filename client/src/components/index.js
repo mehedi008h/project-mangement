@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import Dashboard from "./Dashboard";
 import Project from "./Project";
 import FilterMenu from "./headers/FilterMenu";
+import ProjectCard from "./cards/ProjectCard";
 import NewProject from "./forms/NewProject";
 
 export {
@@ -16,4 +17,5 @@ export {
     Project,
     FilterMenu,
     NewProject,
+    ProjectCard,
 };

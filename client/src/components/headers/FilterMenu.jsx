@@ -34,11 +34,11 @@ const FilterMenu = () => {
             {/* modal  */}
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent bg="blackAlpha.300">
+                <ModalContent bg="black">
                     <ModalHeader>Create Project 😎</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <NewProject />
+                        <NewProject onClose={onClose} />
                     </ModalBody>
                 </ModalContent>
             </Modal>

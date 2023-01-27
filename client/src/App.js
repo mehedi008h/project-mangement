@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Auth, Home, Projects } from "./pages";
+import { Auth, Home, ProjectDetails, Projects } from "./pages";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -10,7 +10,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/auth" element={<Auth />} />
+                {/* project  */}
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/project/:id" element={<ProjectDetails />} />
             </Routes>
         </BrowserRouter>
     );
