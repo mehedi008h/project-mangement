@@ -11,6 +11,7 @@ import ProjectDetailsCard from "./cards/ProjectDetailsCard";
 import TaskHeader from "./tasks/TaskHeader";
 import TaskTable from "./tasks/TaskTable";
 import TableContent from "./tasks/TableContent";
+import NewTask from "./forms/NewTask";
 
 export {
     Header,
@@ -26,4 +27,5 @@ export {
     TaskHeader,
     TaskTable,
     TableContent,
+    NewTask,
 };

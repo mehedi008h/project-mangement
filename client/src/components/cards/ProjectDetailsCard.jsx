@@ -5,7 +5,14 @@ import {
     Box,
     Button,
     Flex,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
     Text,
+    useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import { CiViewList } from "react-icons/ci";
@@ -13,14 +20,17 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { MdOutlineTimer } from "react-icons/md";
 import { RiAttachment2 } from "react-icons/ri";
+import NewTask from "../forms/NewTask";
 
 const ProjectDetailsCard = () => {
+    // open & close modal
+    const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Box my={5} bg="blackAlpha.700" p={4} borderRadius="md">
             <Flex justify="space-between">
                 <Text>Project Details card</Text>
                 <Flex gap={3}>
-                    <Button colorScheme="green" size="sm">
+                    <Button onClick={onOpen} colorScheme="green" size="sm">
                         Add Task
                     </Button>
                     <Button colorScheme="yellow" size="sm">
@@ -31,6 +41,17 @@ const ProjectDetailsCard = () => {
                     </Button>
                 </Flex>
             </Flex>
+            {/* modal  */}
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Add Task 😎</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <NewTask onClose={onClose} />
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
             <Flex gap={6} my={5} width="100%">
                 {/* image  */}
                 <Box width="450px" height="300px" bg="gray" rounded="md"></Box>

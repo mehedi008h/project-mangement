@@ -16,6 +16,7 @@ import {
 import NewProject from "../forms/NewProject";
 
 const FilterMenu = () => {
+    // open & close modal
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Flex justify="space-between" alignItems="center">
