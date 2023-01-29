@@ -33,6 +33,7 @@ public class Project {
     private Date start_date;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date end_date;
+    private String projectLeader;
     @Column(updatable = false)
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
@@ -46,6 +47,10 @@ public class Project {
     )
     @JsonIgnore
     private Backlog backlog;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
 
     @PrePersist
     protected void onCreate(){
