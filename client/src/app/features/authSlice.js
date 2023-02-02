@@ -67,13 +67,12 @@ const authSlice = createSlice({
             })
             .addCase(getUsers.pending, (state, action) => {
                 state.loading = true;
-                state.success = false;
             })
             .addCase(getUsers.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
                 state.success = true;
-                state.users = action.payload.token;
+                state.users = action.payload;
             })
             .addCase(getUsers.rejected, (state, action) => {
                 state.loading = false;
@@ -83,13 +82,12 @@ const authSlice = createSlice({
             })
             .addCase(getUserDetails.pending, (state, action) => {
                 state.loading = true;
-                state.success = false;
             })
             .addCase(getUserDetails.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
                 state.success = true;
-                state.user = action.payload.token;
+                state.user = action.payload;
             })
             .addCase(getUserDetails.rejected, (state, action) => {
                 state.loading = false;

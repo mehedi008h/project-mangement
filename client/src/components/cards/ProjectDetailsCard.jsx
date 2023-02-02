@@ -14,23 +14,53 @@ import {
     Text,
     useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {CiViewList} from "react-icons/ci";
 import {GiSandsOfTime} from "react-icons/gi";
 import {IoChatboxEllipsesOutline} from "react-icons/io5";
 import {MdOutlineTimer} from "react-icons/md";
 import {RiAttachment2} from "react-icons/ri";
 import NewTask from "../forms/NewTask";
+import UsersCard from "./UsersCard";
+import {useDispatch, useSelector} from "react-redux";
+import {getUsers} from "../../app/service/authService";
+import {toast} from "react-hot-toast";
+import {reset} from "../../app/features/authSlice";
 
 const ProjectDetailsCard = ({project}) => {
+    const [developerModal, setDeveloperModal] = useState(false);
+    const {loading, error, users} = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
     // open & close modal
     const {isOpen, onOpen, onClose} = useDisclosure();
+
+    const handleModal = (type) => {
+        onOpen();
+        if (type == "task") {
+            setDeveloperModal(false);
+        } else {
+            setDeveloperModal(true);
+        }
+    }
+
+    useEffect(() => {
+        dispatch(getUsers());
+
+        if (error) {
+            toast.error(error);
+            dispatch(reset());
+        }
+    }, [dispatch, error])
     return (
         <Box my={5} bg="blackAlpha.700" p={4} borderRadius="md">
             <Flex justify="space-between">
                 <Text>Project Identifier # {project?.projectIdentifier}</Text>
                 <Flex gap={3}>
-                    <Button onClick={onOpen} colorScheme="green" size="sm">
+                    <Button onClick={() => handleModal("developer")} colorScheme="teal" size="sm">
+                        Assign Developer
+                    </Button>
+                    <Button onClick={() => handleModal("task")} colorScheme="green" size="sm">
                         Add Task
                     </Button>
                     <Button colorScheme="yellow" size="sm">
@@ -45,10 +75,14 @@ const ProjectDetailsCard = ({project}) => {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay/>
                 <ModalContent>
-                    <ModalHeader>Add Task 😎</ModalHeader>
+                    <ModalHeader>{developerModal ? "Assign Developer" : "Add Task"} 😎</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
-                        <NewTask onClose={onClose}/>
+                        {
+                            developerModal ?
+                                <UsersCard users={users} loading={loading}/> :
+                                <NewTask onClose={onClose}/>
+                        }
                     </ModalBody>
                 </ModalContent>
             </Modal>
