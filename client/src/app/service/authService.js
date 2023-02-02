@@ -1,6 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
+// login service
 export const login = createAsyncThunk(
     "auth/login",
     async (loginData, thunkApi) => {
@@ -28,6 +29,7 @@ export const login = createAsyncThunk(
     }
 );
 
+// register service
 export const register = createAsyncThunk(
     "auth/register",
     async (registerData, thunkApi) => {
@@ -43,6 +45,42 @@ export const register = createAsyncThunk(
                 config
             );
             console.log("Register Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);
+
+// get all user
+export const getUsers = createAsyncThunk(
+    "auth/getUsers",
+    async (thunkApi) => {
+        try {
+            const response = await axios.get(`/api/v1/user`);
+            console.log("Users Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);
+
+// get user details
+export const getUserDetails = createAsyncThunk(
+    "auth/getUserDetails",
+    async ({email}, thunkApi) => {
+        try {
+            const response = await axios.get(`/api/v1/user/${email}`);
+            console.log("User Details Response:", response.data);
             if (response.data.statusCode === 400) {
                 return thunkApi.rejectWithValue(response.data);
             }
