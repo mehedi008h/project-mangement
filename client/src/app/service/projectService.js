@@ -27,6 +27,31 @@ export const createProject = createAsyncThunk(
     }
 );
 
+export const assignDeveloper = createAsyncThunk(
+    "project/assignDeveloper",
+    async ({projectId, userEmail}, thunkApi) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            };
+            const response = await axios.post(
+                `/api/v1/project/${projectId}/${userEmail}`,
+                config
+            );
+            console.log("Project Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);
+
 // get all project
 export const getProject = createAsyncThunk(
     "project/getProject",

@@ -37,7 +37,7 @@ const ProjectDetailsCard = ({project}) => {
 
     const handleModal = (type) => {
         onOpen();
-        if (type == "task") {
+        if (type === "task") {
             setDeveloperModal(false);
         } else {
             setDeveloperModal(true);
@@ -80,7 +80,7 @@ const ProjectDetailsCard = ({project}) => {
                     <ModalBody>
                         {
                             developerModal ?
-                                <UsersCard users={users} loading={loading}/> :
+                                <UsersCard users={users} projectId={project?.projectIdentifier} loading={loading}/> :
                                 <NewTask onClose={onClose}/>
                         }
                     </ModalBody>

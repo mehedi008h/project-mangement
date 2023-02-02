@@ -33,8 +33,6 @@ public class ProjectService {
             }
         }
 
-        System.out.println(username);
-
         // create new project
         try {
             User user = userRepository.findByEmail(username);
@@ -78,9 +76,22 @@ public class ProjectService {
         return projectRepository.findAllByProjectLeader(username);
     }
 
+    // assign developer in project
+    public Project assignDeveloper(String projectId, String userEmail, String username) {
+        // find project & check valid project leader
+        Project project = findProjectByIdentifier(projectId, username);
+        // find user
+        User user = userRepository.findByEmail(userEmail);
+
+        // assign user in project
+        project.getUsers().add(user);
+        user.getProjects().add(project);
+
+        return projectRepository.save(project);
+    }
+
     // delete project by identifier
     public void deleteProjectByIdentifier(String projectId, String username) {
-
         projectRepository.delete(findProjectByIdentifier(projectId, username));
     }
 

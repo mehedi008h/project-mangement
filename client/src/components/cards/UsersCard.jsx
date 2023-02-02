@@ -1,21 +1,32 @@
-import React, {Fragment, useState} from 'react';
-import {Avatar, Button, Flex, Spinner, Stack, Tag, Text} from "@chakra-ui/react";
+import React, {Fragment, useEffect} from 'react';
+import {Avatar, Button, Flex, Spinner, Stack,  Text} from "@chakra-ui/react";
+import {useDispatch, useSelector} from "react-redux";
+import {assignDeveloper} from "../../app/service/projectService";
+import {reset} from "../../app/features/projectSlice";
+import {toast} from "react-hot-toast";
 
-const UsersCard = ({users, loading}) => {
-    const [developers, setDevelopers] = useState([]);
+const UsersCard = ({users, projectId, loading}) => {
+    const {success, loading: projectLoading, error, projects} = useSelector((state) => state.project);
+    console.log("Projects:", projects);
+    const dispatch = useDispatch();
 
-    const handleAssignDeveloper = (developer) => {
-        setDevelopers([...developers, developer]);
-
+    const handleAssignDeveloper = (userEmail) => {
+        dispatch(assignDeveloper({projectId, userEmail}));
     }
+
+    useEffect(() => {
+        if (success) {
+            toast.success("User assigned successfully!");
+            dispatch(reset());
+        }
+
+        if (error) {
+            toast.error(error);
+        }
+    }, [dispatch, success, error])
     return (
         <Stack spacing={2} my={2}>
-            <Flex flexWrap="wrap" gap={2}>
-                {developers.map((developer) => (
-                    <Tag key={developer?.id}>{developer?.name}</Tag>
-                ))}
 
-            </Flex>
             {loading ? <Spinner/> : (
                 <Fragment>
                     {
@@ -27,7 +38,8 @@ const UsersCard = ({users, loading}) => {
                                     <Avatar name={user?.name}/>
                                     <Text>{user?.name}</Text>
                                 </Flex>
-                                <Button onClick={() => handleAssignDeveloper(user)}>Assign</Button>
+                                <Button isLoading={projectLoading}
+                                        onClick={() => handleAssignDeveloper(user?.email)}>Assign</Button>
                             </Flex>
                         ))
                     }

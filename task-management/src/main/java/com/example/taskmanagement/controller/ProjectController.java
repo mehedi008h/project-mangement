@@ -35,9 +35,20 @@ public class ProjectController {
         return new ResponseEntity<Project>(project, HttpStatus.CREATED);
     }
 
+    // assign user in project
+    @PostMapping("/{projectId}/{userEmail}")
+    public ResponseEntity<?> assignDeveloper(
+            @PathVariable String projectId,
+            @PathVariable String userEmail,
+            Principal principal
+    ) {
+        Project project = projectService.assignDeveloper(projectId, userEmail, principal.getName());
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
+    }
+
     // find project by project identifier
     @GetMapping("/{projectId}")
-    public ResponseEntity<?> getProjectById(@PathVariable String projectId,Principal principal) {
+    public ResponseEntity<?> getProjectById(@PathVariable String projectId, Principal principal) {
         Project project = projectService.findProjectByIdentifier(projectId, principal.getName());
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
@@ -50,7 +61,7 @@ public class ProjectController {
 
     // delete project by identifier
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<?> deleteProject(@PathVariable String projectId,Principal principal) {
+    public ResponseEntity<?> deleteProject(@PathVariable String projectId, Principal principal) {
         projectService.deleteProjectByIdentifier(projectId, principal.getName());
 
         return new ResponseEntity<String>("Project with Id " + projectId + " was deleted.", HttpStatus.OK);
