@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createProject, getProject } from "../service/projectService";
+import {createSlice} from "@reduxjs/toolkit";
+import {createProject, getProject, getProjectDetails} from "../service/projectService";
 
 const projectSlice = createSlice({
     name: "project",
@@ -13,8 +13,6 @@ const projectSlice = createSlice({
 
     reducers: {
         reset: (state, action) => {
-            state.project = null;
-            state.projects = null;
             state.loading = false;
             state.success = false;
             state.error = false;
@@ -43,7 +41,6 @@ const projectSlice = createSlice({
             .addCase(getProject.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
-                state.success = true;
                 state.projects = action.payload;
             })
             .addCase(getProject.rejected, (state, action) => {
@@ -51,10 +48,24 @@ const projectSlice = createSlice({
                 state.success = false;
                 state.projects = null;
                 state.error = action.payload;
-            });
+            })
+            .addCase(getProjectDetails.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getProjectDetails.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+                state.project = action.payload;
+            })
+            .addCase(getProjectDetails.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.project = null;
+                state.error = action.payload;
+            })
     },
 });
 
-export const { reset } = projectSlice.actions;
+export const {reset} = projectSlice.actions;
 
 export const projectReducer = projectSlice.reducer;

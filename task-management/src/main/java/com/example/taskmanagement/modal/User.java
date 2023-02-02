@@ -1,5 +1,6 @@
 package com.example.taskmanagement.modal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,9 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Builder
@@ -37,13 +36,16 @@ public class User implements UserDetails {
     private Role role;
 
     // one to many with project
-    @OneToMany(
-            cascade = CascadeType.REFRESH,
-            fetch = FetchType.EAGER,
-            mappedBy = "user",
-            orphanRemoval = true
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            fetch = FetchType.LAZY,
+            mappedBy = "users"
     )
-    List<Project> projects = new ArrayList<>();
+    @JsonIgnore
+    private Set<Project> projects = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

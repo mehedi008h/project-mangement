@@ -11,15 +11,15 @@ import {
     Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { TbDots } from "react-icons/tb";
-import { GiSandsOfTime } from "react-icons/gi";
-import { MdOutlineTimer } from "react-icons/md";
-import { CiViewList } from "react-icons/ci";
-import { IoAddCircleOutline, IoChatboxEllipsesOutline } from "react-icons/io5";
-import { RiAttachment2 } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import {TbDots} from "react-icons/tb";
+import {GiSandsOfTime} from "react-icons/gi";
+import {MdOutlineTimer} from "react-icons/md";
+import {CiViewList} from "react-icons/ci";
+import {IoAddCircleOutline, IoChatboxEllipsesOutline} from "react-icons/io5";
+import {RiAttachment2} from "react-icons/ri";
+import {Link} from "react-router-dom";
 
-const ProjectCard = () => {
+const ProjectCard = ({project}) => {
     return (
         <Box bg="blackAlpha.700" p={4} width="100%" borderRadius="md">
             {/* image  */}
@@ -35,27 +35,27 @@ const ProjectCard = () => {
             </Box>
             {/* header  */}
             <Flex justify="space-between" my={4}>
-                <Link to={`/project/${2}`}>
+                <Link to={`/project/${project?.projectIdentifier}`}>
                     <Text fontSize={18} fontWeight="semibold">
-                        Project Title
+                        {project?.projectName}
                     </Text>
                 </Link>
 
                 <Menu>
                     <MenuButton>
-                        <TbDots size={20} />
+                        <TbDots size={20}/>
                     </MenuButton>
                     <MenuList>
-                        <Link to={`/project/${2}`}>
-                            <MenuItem icon={<IoAddCircleOutline />}>
+                        <Link to={`/project/${project?.projectIdentifier}`}>
+                            <MenuItem icon={<IoAddCircleOutline/>}>
                                 View
                             </MenuItem>
                         </Link>
 
-                        <MenuItem icon={<IoAddCircleOutline />}>
+                        <MenuItem icon={<IoAddCircleOutline/>}>
                             Update
                         </MenuItem>
-                        <MenuItem icon={<IoAddCircleOutline />}>
+                        <MenuItem icon={<IoAddCircleOutline/>}>
                             Delete
                         </MenuItem>
                     </MenuList>
@@ -65,14 +65,15 @@ const ProjectCard = () => {
             <Flex justify="space-between" my={4}>
                 <Badge px={2} py={1}>
                     <Flex alignItems="center" gap={2}>
-                        <GiSandsOfTime size={15} />
+                        <GiSandsOfTime size={15}/>
                         34:40
                     </Flex>
                 </Badge>
                 <Badge px={2} py={1} colorScheme="green">
                     <Flex alignItems="center" gap={2}>
-                        <MdOutlineTimer size={15} />
-                        <Text textTransform="uppercase">Today</Text>
+                        <MdOutlineTimer size={15}/>
+                        <Text textTransform="uppercase">{project?.end_date
+                        }</Text>
                     </Flex>
                 </Badge>
             </Flex>
@@ -85,18 +86,18 @@ const ProjectCard = () => {
                 </Badge>
             </Flex>
             <Flex mt={4} justify="space-between">
-                <Avatar size="sm" name="Mehedi Hasan" />
+                <Avatar size="sm" name="Mehedi Hasan"/>
                 <Flex gap={3}>
                     <Flex align="center" gap={1}>
-                        <RiAttachment2 />
+                        <RiAttachment2/>
                         20
                     </Flex>
                     <Flex align="center" gap={1}>
-                        <IoChatboxEllipsesOutline color="white" />
+                        <IoChatboxEllipsesOutline color="white"/>
                         20
                     </Flex>
                     <Flex align="center" gap={1}>
-                        <CiViewList />
+                        <CiViewList/>
                         20
                     </Flex>
                 </Flex>

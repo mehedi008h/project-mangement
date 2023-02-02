@@ -5,16 +5,17 @@ import {
     FormControl,
     FormHelperText,
     FormLabel,
-    Input,
-    Stack,
+    Input, Select,
+    Stack, Tag,
     Textarea,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { Formik } from "formik";
+import React, {useEffect, useState} from "react";
+import {Formik} from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-hot-toast";
-import { createProject } from "../../app/service/projectService";
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-hot-toast";
+import {createProject} from "../../app/service/projectService";
+import {reset} from "../../app/features/projectSlice";
 
 // Creating schema
 const schema = Yup.object().shape({
@@ -27,8 +28,8 @@ const schema = Yup.object().shape({
     end_date: Yup.string().required("End date is a required field!"),
 });
 
-const NewProject = ({ onClose }) => {
-    const { success, loading, error } = useSelector((state) => state.project);
+const NewProject = ({onClose}) => {
+    const {success, loading, error} = useSelector((state) => state.project);
 
     const dispatch = useDispatch();
 
@@ -41,6 +42,7 @@ const NewProject = ({ onClose }) => {
         if (success) {
             toast.success("Project created successfully 😎");
             onClose();
+            dispatch(reset())
         }
     }, [error, success, onClose]);
     return (
@@ -59,13 +61,13 @@ const NewProject = ({ onClose }) => {
             }}
         >
             {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-            }) => (
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+              }) => (
                 <form noValidate onSubmit={handleSubmit}>
                     <Stack py={4}>
                         <FormControl isRequired>
@@ -149,13 +151,13 @@ const NewProject = ({ onClose }) => {
                                 </FormHelperText>
                             </FormControl>
                         </Flex>
-                        <Box style={{ marginTop: "20px" }}>
+                        <Box style={{marginTop: "20px"}}>
                             <Button
                                 width="100%"
                                 type="submit"
                                 bg="blue.600"
                                 color="white"
-                                _hover={{ bg: "blue.500" }}
+                                _hover={{bg: "blue.500"}}
                                 isLoading={loading}
                             >
                                 Create Project

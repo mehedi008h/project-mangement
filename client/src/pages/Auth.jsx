@@ -1,16 +1,40 @@
 import { Box, Button, Center, Flex, Stack, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Login from "../components/auth/Login";
 import Signup from "../components/auth/Signup";
 import { DiJira } from "react-icons/di";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
 import { BiHomeSmile } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import { reset } from "../app/features/authSlice";
 
 const Auth = () => {
     // state
     const [signup, setSignup] = useState(false);
+    const { success, loading, error } = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // handle error
+    useEffect(() => {
+        if (success) {
+            toast.success(
+                signup ? "Register successfully 😎" : "Login successfully 😎"
+            );
+            dispatch(reset());
+            if (signup) {
+                setSignup(false);
+            } else {
+                navigate("/");
+            }
+        }
+        if (error) {
+            toast.error(error);
+        }
+    }, [error, success, signup, dispatch, navigate]);
     return (
         <Flex
             height="100vh"
@@ -90,9 +114,9 @@ const Auth = () => {
                     </Text>
                     {/* login & signup form  */}
                     {signup ? (
-                        <Signup signup={signup} />
+                        <Signup signup={signup} loading={loading} />
                     ) : (
-                        <Login signup={signup} />
+                        <Login signup={signup} loading={loading} />
                     )}
 
                     <Button

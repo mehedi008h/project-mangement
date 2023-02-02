@@ -9,4 +9,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     User findByEmail(String email);
 
     User getById(Integer id);
+
+    // find all user instead of current user
+    Iterable<User> findByEmailNot(String email);
 }

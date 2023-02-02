@@ -11,6 +11,8 @@ import com.example.taskmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -36,7 +38,7 @@ public class ProjectService {
         // create new project
         try {
             User user = userRepository.findByEmail(username);
-            project.setUser(user);
+            project.getUsers().add(user);
             project.setProjectLeader(user.getUsername());
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
@@ -51,6 +53,7 @@ public class ProjectService {
                 project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
             }
 
+            user.getProjects().add(project);
             return projectRepository.save(project);
         } catch (Exception e) {
             throw new ProjectIdException("Project ID " + project.getProjectIdentifier().toUpperCase() + " already taken!");

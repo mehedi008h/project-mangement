@@ -11,6 +11,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../app/service/authService";
 
 // Creating schema
 const schema = Yup.object().shape({
@@ -22,9 +24,11 @@ const schema = Yup.object().shape({
         .min(8, "Password must be at least 8 characters!"),
 });
 
-const Login = ({ signup }) => {
+const Login = ({ signup, loading }) => {
     // state
     const [show, setShow] = useState(false);
+
+    const dispatch = useDispatch();
 
     // show password
     const handleClick = () => setShow(!show);
@@ -37,6 +41,7 @@ const Login = ({ signup }) => {
             }}
             onSubmit={(values) => {
                 console.log(values);
+                dispatch(login(values));
             }}
         >
             {({
@@ -136,6 +141,7 @@ const Login = ({ signup }) => {
                             bg="blue.600"
                             color="white"
                             _hover={{ bg: "blue.500" }}
+                            isLoading={loading}
                         >
                             {signup ? "Sign up" : "Login"}
                         </Button>
