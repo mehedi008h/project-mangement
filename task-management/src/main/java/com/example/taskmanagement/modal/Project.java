@@ -67,7 +67,6 @@ public class Project {
     @JoinTable(name = "developers",
             joinColumns = {@JoinColumn(name = "project_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
     @PrePersist

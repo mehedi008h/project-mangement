@@ -6,24 +6,12 @@ import {reset} from "../../app/features/projectSlice";
 import {toast} from "react-hot-toast";
 
 const UsersCard = ({users, projectId, loading}) => {
-    const {success, loading: projectLoading, error, projects} = useSelector((state) => state.project);
-    console.log("Projects:", projects);
     const dispatch = useDispatch();
 
     const handleAssignDeveloper = (userEmail) => {
         dispatch(assignDeveloper({projectId, userEmail}));
     }
 
-    useEffect(() => {
-        if (success) {
-            toast.success("User assigned successfully!");
-            dispatch(reset());
-        }
-
-        if (error) {
-            toast.error(error);
-        }
-    }, [dispatch, success, error])
     return (
         <Stack spacing={2} my={2}>
 
@@ -38,7 +26,7 @@ const UsersCard = ({users, projectId, loading}) => {
                                     <Avatar name={user?.name}/>
                                     <Text>{user?.name}</Text>
                                 </Flex>
-                                <Button isLoading={projectLoading}
+                                <Button
                                         onClick={() => handleAssignDeveloper(user?.email)}>Assign</Button>
                             </Flex>
                         ))

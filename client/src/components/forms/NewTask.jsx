@@ -9,48 +9,62 @@ import {
     Stack,
     Textarea,
 } from "@chakra-ui/react";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-hot-toast";
-import {createProject} from "../../app/service/projectService";
+import {createTask} from "../../app/service/taskService";
+import {reset} from "../../app/features/taskSlice";
 
 // Creating schema
 const schema = Yup.object().shape({
     summary: Yup.string().required("Summary is a required field!"),
     name: Yup.string().required("Name is a required field!"),
-    developer: Yup.string().required("Assign Developer is a required field!"),
     priority: Yup.string().required("Priority is a required field!"),
     dueDate: Yup.string().required("Due Date is a required field!"),
 });
 
-const NewTask = ({onClose}) => {
+const NewTask = ({onClose, developers, projectId}) => {
+    // state
+    const[userEmail, setUserEmail] = useState("");
+    const[emailError, setEmailError] = useState(false);
+    const {success, loading, error} = useSelector((state) => state.task);
+
+    console.log("Email:", userEmail);
+    console.log("Error:", emailError)
+
     const dispatch = useDispatch();
 
-    // handle error
-    // useEffect(() => {
-    //     if (error) {
-    //         toast.error(error);
-    //     }
+    //handle error
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
 
-    //     if (success) {
-    //         toast.success("Project created successfully 😎");
-    //         onClose();
-    //     }
-    // }, [error, success, onClose]);
+        if (success) {
+            toast.success("Task created successfully 😎");
+            onClose();
+            dispatch(reset());
+        }
+    }, [error, success, onClose,dispatch]);
     return (
         <Formik
             validationSchema={schema}
             initialValues={{
                 summary: "",
                 name: "",
-                developer: "",
-                priority: "",
+                priority: null,
                 dueDate: "",
             }}
             onSubmit={(values) => {
+                if(userEmail === "") {
+                    setEmailError(true);
+                }else {
+                    setEmailError(false);
+                }
                 console.log("Task Data: ", values);
+                dispatch(createTask({projectId, userEmail, values}));
             }}
         >
             {({
@@ -99,19 +113,20 @@ const NewTask = ({onClose}) => {
                             <FormLabel>Assign Developer</FormLabel>
                             <Select
                                 placeholder="Choose developer"
-                                name="developer"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.developer}
+                                name="userEmail"
+                                onChange={(e) => setUserEmail(e.target.value)}
+                                value={userEmail}
                             >
-                                <option value="Todo">Todo</option>
-                                <option value="Progress">Progress</option>
-                                <option value="Complete">Complete</option>
+                                {
+                                   developers && developers?.map((developer) => (
+                                        <option key={developer?.id} value={developer?.email}>
+                                            {developer?.name}
+                                        </option>
+                                    ))
+                                }
                             </Select>
                             <FormHelperText color="red.400">
-                                {errors.developer &&
-                                    touched.developer &&
-                                    errors.developer}
+                                {emailError && "Assign Developer is required!"}
                             </FormHelperText>
                         </FormControl>
                         {/* priority  */}
@@ -124,9 +139,9 @@ const NewTask = ({onClose}) => {
                                 onBlur={handleBlur}
                                 value={values.priority}
                             >
-                                <option value="high">High</option>
-                                <option value="medium">Medium</option>
-                                <option value="low">Low</option>
+                                <option value={3}>High</option>
+                                <option value={2}>Medium</option>
+                                <option value={1}>Low</option>
                             </Select>
                             <FormHelperText color="red.400">
                                 {errors.priority &&
@@ -158,7 +173,7 @@ const NewTask = ({onClose}) => {
                                 bg="blue.600"
                                 color="white"
                                 _hover={{bg: "blue.500"}}
-                                // isLoading={loading}
+                                isLoading={loading}
                             >
                                 Add Task
                             </Button>

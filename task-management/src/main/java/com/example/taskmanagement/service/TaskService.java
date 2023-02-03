@@ -3,9 +3,11 @@ package com.example.taskmanagement.service;
 import com.example.taskmanagement.exceptions.ProjectNotFoundException;
 import com.example.taskmanagement.modal.Backlog;
 import com.example.taskmanagement.modal.Task;
+import com.example.taskmanagement.modal.User;
 import com.example.taskmanagement.repository.BacklogRepository;
 import com.example.taskmanagement.repository.ProjectRepository;
 import com.example.taskmanagement.repository.TaskRepository;
+import com.example.taskmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,21 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final ProjectService projectService;
+    private final UserRepository userRepository;
 
     // add project task
-    public Task addProjectTask(String projectIdentifier, Task projectTask, String username) {
+    public Task addProjectTask(String projectIdentifier, Task projectTask, String userEmail, String username) {
         Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog();
-        System.out.println(backlog);
 
         projectTask.setBacklog(backlog);
+
+        // find user and assign task
+        User user = userRepository.findByEmail(userEmail);
+        projectTask.setUser(user);
+
+        // set task assigner
+        projectTask.setAssignBy(userRepository.findByEmail(username));
+
         // update sequence
         Integer backLogSequence = backlog.getPTSequence();
         backLogSequence++;

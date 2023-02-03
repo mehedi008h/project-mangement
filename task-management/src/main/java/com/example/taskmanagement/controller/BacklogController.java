@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 
 @RequiredArgsConstructor
@@ -20,18 +21,18 @@ public class BacklogController {
     private final ValidationErrorService validationErrorService;
 
     // create project task
-    @PostMapping("/{backlog_id}")
+    @PostMapping("/{backlog_id}/{userEmail}")
     public ResponseEntity<?> addPTtoBacklog(
             @Valid @RequestBody Task task,
-
             BindingResult result,
             @PathVariable String backlog_id,
+            @PathVariable String userEmail,
             Principal principal
     ) {
         ResponseEntity<?> errorMap = validationErrorService.ValidationService(result);
         if (errorMap != null) return errorMap;
 
-        Task task1 = taskService.addProjectTask(backlog_id, task, principal.getName());
+        Task task1 = taskService.addProjectTask(backlog_id, task, userEmail, principal.getName());
 
         return new ResponseEntity<Task>(task1, HttpStatus.CREATED);
     }

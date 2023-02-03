@@ -8,15 +8,12 @@ import {reset} from "../app/features/projectSlice";
 import {toast} from "react-hot-toast";
 
 const Project = () => {
-    const {success, loading, error, projects} = useSelector((state) => state.project);
+    const {loading, error, projects} = useSelector((state) => state.project);
     console.log("Projects:", projects);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getProject());
-        if (success) {
-            dispatch(reset())
-        }
         if (error) {
             toast.error(error);
         }

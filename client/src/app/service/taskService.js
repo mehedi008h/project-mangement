@@ -1,9 +1,9 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const createTask = createAsyncThunk(
     "task/createTask",
-    async ({ backlog_id, taskData }, thunkApi) => {
+    async ({projectId, userEmail, values}, thunkApi) => {
         try {
             const config = {
                 headers: {
@@ -11,8 +11,8 @@ export const createTask = createAsyncThunk(
                 },
             };
             const response = await axios.post(
-                `/api/v1/backlog/${backlog_id}`,
-                taskData,
+                `/api/v1/backlog/${projectId}/${userEmail}`,
+                values,
                 config
             );
             console.log("Task Response:", response.data);

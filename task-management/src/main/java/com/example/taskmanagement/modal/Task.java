@@ -22,11 +22,13 @@ public class Task {
     private String projectSequence;
     @NotBlank(message = "Please include a project summary!")
     private String summary;
-    private String acceptanceCriteria;
+    private String name;
     private String status;
     private Integer priority;
     private Date dueDate;
-
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assign_user_id", nullable = false)
+    private User assignBy;
     // many to one
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
@@ -34,6 +36,10 @@ public class Task {
     private Backlog backlog;
     @Column(updatable = false)
     private String projectIdentifier;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @Column(updatable = false)
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;

@@ -47,6 +47,22 @@ public class User implements UserDetails {
     @JsonIgnore
     private Set<Project> projects = new HashSet<>();
 
+    @OneToMany(
+            cascade = CascadeType.REFRESH,
+            fetch = FetchType.EAGER,
+            mappedBy = "user",
+            orphanRemoval = true
+    )
+    private List<Task> tasks = new ArrayList<>();
+
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            mappedBy = "assignBy"
+    )
+    @JsonIgnore
+    private Task task;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

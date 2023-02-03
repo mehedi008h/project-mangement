@@ -14,16 +14,14 @@ import {toast} from "react-hot-toast";
 import {useParams} from "react-router-dom";
 
 const ProjectDetails = () => {
-    const {success, loading, error, project} = useSelector((state) => state.project);
+    const {loading, error, project} = useSelector((state) => state.project);
     console.log("Projects:", project);
     const dispatch = useDispatch();
     const {id} = useParams();
 
     useEffect(() => {
         dispatch(getProjectDetails({id}));
-        if (success) {
-            dispatch(reset())
-        }
+
         if (error) {
             toast.error(error);
         }
