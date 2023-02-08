@@ -2,17 +2,17 @@ package com.example.taskmanagement.modal;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
-@Getter
+@Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "backlog")
 public class Backlog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +31,7 @@ public class Backlog {
             mappedBy = "backlog",
             orphanRemoval = true
     )
+    @JsonIgnore
     private List<Task> projectTasks = new ArrayList<>();
 
 

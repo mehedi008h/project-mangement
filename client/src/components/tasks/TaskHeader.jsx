@@ -14,7 +14,7 @@ const TaskHeader = () => {
                     display="flex"
                     alignItems="center"
                     justifyContent="start"
-                    pl={5}
+                    pl={3}
                     fontWeight="semibold"
                 >
                     # Task Name
@@ -26,10 +26,10 @@ const TaskHeader = () => {
                     display="flex"
                     alignItems="center"
                     justifyContent="start"
-                    pl={5}
+                    pl={3}
                     fontWeight="semibold"
                 >
-                    Tag{" "}
+                    Status{" "}
                 </GridItem>
                 <GridItem
                     w="100%"
@@ -38,10 +38,10 @@ const TaskHeader = () => {
                     display="flex"
                     alignItems="center"
                     justifyContent="start"
-                    pl={5}
+                    pl={3}
                     fontWeight="semibold"
                 >
-                    Hours{" "}
+                    Remaining Days{" "}
                 </GridItem>
                 <GridItem
                     w="100%"
@@ -50,17 +50,17 @@ const TaskHeader = () => {
                     display="flex"
                     alignItems="center"
                     justifyContent="start"
-                    pl={5}
+                    pl={3}
                     fontWeight="semibold"
                 >
-                    Assign By{" "}
+                    Assign Date{" "}
                 </GridItem>
                 <GridItem
                     w="100%"
                     display="flex"
                     alignItems="center"
                     justifyContent="start"
-                    pl={5}
+                    pl={3}
                     fontWeight="semibold"
                 >
                     Due Date{" "}

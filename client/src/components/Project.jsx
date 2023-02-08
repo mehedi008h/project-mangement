@@ -6,10 +6,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {getProject} from "../app/service/projectService";
 import {reset} from "../app/features/projectSlice";
 import {toast} from "react-hot-toast";
+import {ImFilesEmpty} from "react-icons/im";
 
 const Project = () => {
     const {loading, error, projects} = useSelector((state) => state.project);
-    console.log("Projects:", projects);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -46,11 +47,20 @@ const Project = () => {
             {/* projects  */}
             <Grid templateColumns="repeat(3, 1fr)" gap={8}>
                 {loading ? (<Text>Loading</Text>) : (<Fragment>
-                    {projects?.map((project) => (
+                    {projects && projects?.map((project) => (
                         <ProjectCard key={project?.id} project={project}/>
                     ))}
                 </Fragment>)}
             </Grid>
+
+            {
+                projects.length === 0 && (
+                    <Flex  mt={14} justifyContent="center"  width="100%">
+                        <ImFilesEmpty size={70} color="teal"/>
+                    </Flex>
+                )
+
+            }
         </Box>
     );
 };

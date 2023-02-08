@@ -1,5 +1,6 @@
 package com.example.taskmanagement.modal;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -53,15 +54,30 @@ public class User implements UserDetails {
             mappedBy = "user",
             orphanRemoval = true
     )
-    private List<Task> tasks = new ArrayList<>();
-
-    @OneToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            mappedBy = "assignBy"
-    )
     @JsonIgnore
-    private Task task;
+    private List<Task> tasks = new ArrayList<>();
+    @Column(
+            name = "created_at",
+            nullable = false,
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE",
+            updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT")
+    private Date createdAt;
+    @Column(
+            name = "updated_at",
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
+    )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT")
+    private Date updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

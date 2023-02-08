@@ -32,7 +32,7 @@ public class TaskService {
         projectTask.setUser(user);
 
         // set task assigner
-        projectTask.setAssignBy(userRepository.findByEmail(username));
+        projectTask.setAssignBy(username);
 
         // update sequence
         Integer backLogSequence = backlog.getPTSequence();
@@ -58,6 +58,7 @@ public class TaskService {
 
     // get project backlog
     public Iterable<Task> findBacklogById(String backlogId, String username) {
+        System.out.println(backlogId);
         projectService.findProjectByIdentifier(backlogId, username);
         return taskRepository.findByProjectIdentifierOrderByPriority(backlogId);
     }

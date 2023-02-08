@@ -5,15 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
 import java.util.Date;
 
-@ToString
-@Setter
-@Getter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +24,9 @@ public class Task {
     private String name;
     private String status;
     private Integer priority;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date dueDate;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "assign_user_id", nullable = false)
-    private User assignBy;
+    private String assignBy;
     // many to one
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
@@ -39,20 +37,29 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
-    @Column(updatable = false)
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date created_At;
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date updated_At;
+    @Column(
+            name = "created_at",
+            nullable = false,
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE",
+            updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT")
+    private Date createdAt;
+    @Column(
+            name = "updated_at",
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
+            )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT")
+    private Date updatedAt;
 
     @PrePersist
-    protected void onCreate(){
-        this.created_At = new Date();
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
     }
 
-    @PreUpdate
-    protected void onUpdate(){
-        this.updated_At = new Date();
-    }
 }

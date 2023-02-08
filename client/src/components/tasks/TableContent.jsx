@@ -15,8 +15,16 @@ import {
 import { IoIosArrowForward } from "react-icons/io";
 import { MdOutlineTimer } from "react-icons/md";
 import { GiSandsOfTime } from "react-icons/gi";
+import moment from "moment";
 
-const TableContent = () => {
+const TableContent = ({task}) => {
+    // calculate days
+    let a = moment(task?.dueDate);
+    let b = moment(task?.createdAt);
+    let remaining = a.diff(b, 'days');
+
+    console.log(task);
+
     return (
         <Grid
             templateColumns="repeat(7, 1fr)"
@@ -33,7 +41,7 @@ const TableContent = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="start"
-                pl={5}
+                pl={3}
                 fontSize={14}
             >
                 <Flex
@@ -43,9 +51,9 @@ const TableContent = () => {
                     alignItems="center"
                 >
                     <Flex gap={2} alignItems="center">
-                        <Text>02</Text>
+                        <Text>{task?.projectSequence}</Text>
                         <IoCheckmarkDoneCircleSharp size={16} color="green" />
-                        <Text>Messanger Application</Text>
+                        <Text>{task?.name}</Text>
                     </Flex>
                     <Flex pr={4} gap="3">
                         <Flex gap={1} alignItems="center">
@@ -71,11 +79,10 @@ const TableContent = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="start"
-                pl={5}
+                pl={3}
             >
                 <Stack direction="row">
-                    <Badge colorScheme="red">Removed</Badge>
-                    <Badge colorScheme="purple">New</Badge>
+                    <Badge px={4} py={1} colorScheme="red">{task?.status}</Badge>
                 </Stack>
             </GridItem>
             <GridItem
@@ -85,12 +92,12 @@ const TableContent = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="start"
-                pl={5}
+                pl={3}
             >
-                <Badge px={2} py={1}>
+                <Badge px={4} py={1}>
                     <Flex alignItems="center" gap={2}>
                         <GiSandsOfTime size={15} />
-                        34:40
+                        {remaining} days
                     </Flex>
                 </Badge>
             </GridItem>
@@ -101,25 +108,27 @@ const TableContent = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="start"
-                pl={5}
+                pl={3}
                 fontSize={14}
             >
-                <Flex gap="2" align="center">
-                    <Avatar size="xs" name="Mehedi Hasan" />
-                    <Text>Mehedi Hasan</Text>
-                </Flex>
+                <Badge px={2} py={1} colorScheme="green">
+                    <Flex alignItems="center" gap={2}>
+                        <MdOutlineTimer size={15} />
+                        <Text textTransform="uppercase">{task?.createdAt}</Text>
+                    </Flex>
+                </Badge>
             </GridItem>
             <GridItem
                 w="100%"
                 display="flex"
                 alignItems="center"
                 justifyContent="start"
-                pl={5}
+                pl={3}
             >
-                <Badge px={2} py={1} colorScheme="green">
+                <Badge px={2} py={1} colorScheme="red">
                     <Flex alignItems="center" gap={2}>
                         <MdOutlineTimer size={15} />
-                        <Text textTransform="uppercase">Today</Text>
+                        <Text textTransform="uppercase">{task?.dueDate}</Text>
                     </Flex>
                 </Badge>
             </GridItem>

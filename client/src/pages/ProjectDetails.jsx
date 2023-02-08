@@ -12,10 +12,11 @@ import {getProjectDetails} from "../app/service/projectService";
 import {reset} from "../app/features/projectSlice";
 import {toast} from "react-hot-toast";
 import {useParams} from "react-router-dom";
+import {getProjectTask} from "../app/service/taskService";
 
 const ProjectDetails = () => {
     const {loading, error, project} = useSelector((state) => state.project);
-    console.log("Projects:", project);
+
     const dispatch = useDispatch();
     const {id} = useParams();
 
@@ -25,7 +26,7 @@ const ProjectDetails = () => {
         if (error) {
             toast.error(error);
         }
-    }, [])
+    }, [dispatch,error, id])
     return (
         <Flex gap={3}>
             <Box display={{md: "flex", base: "none"}} width="300px">
@@ -38,7 +39,7 @@ const ProjectDetails = () => {
                         <Fragment>
                             <ProjectDetailsCard project={project}/>
                             <TaskHeader/>
-                            <TaskTable/>
+                            <TaskTable projectId={project?.projectIdentifier} projectLoading={loading}/>
                         </Fragment>
                 }
 

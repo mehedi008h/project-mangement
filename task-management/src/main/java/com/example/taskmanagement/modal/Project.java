@@ -5,18 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.*;
 
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "project")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,12 +41,6 @@ public class Project {
     )
     private List<Tag> tags = new ArrayList<>();
     private String image;
-    @Column(updatable = false)
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date created_At;
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date updated_At;
-
     @OneToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
@@ -56,7 +48,6 @@ public class Project {
     )
     @JsonIgnore
     private Backlog backlog;
-
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {
@@ -68,14 +59,27 @@ public class Project {
             joinColumns = {@JoinColumn(name = "project_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> users = new HashSet<>();
+    @Column(
+            name = "created_at",
+            nullable = false,
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE",
+            updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT")
+    private Date createdAt;
+    @Column(
+            name = "updated_at",
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
+    )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT")
+    private Date updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        this.created_At = new Date();
+        this.createdAt = new Date();
     }
-
     @PreUpdate
     protected void onUpdate() {
-        this.updated_At = new Date();
+        this.updatedAt = new Date();
     }
+
 }
