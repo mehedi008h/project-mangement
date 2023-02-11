@@ -12,6 +12,7 @@ import TaskHeader from "./tasks/TaskHeader";
 import TaskTable from "./tasks/TaskTable";
 import TableContent from "./tasks/TableContent";
 import NewTask from "./forms/NewTask";
+import TaskDetails from "./tasks/TaskDetails";
 
 export {
     Header,
@@ -28,4 +29,5 @@ export {
     TaskTable,
     TableContent,
     NewTask,
+    TaskDetails
 };

@@ -47,3 +47,23 @@ export const getProjectTask = createAsyncThunk(
         }
     }
 );
+
+// get task by project
+export const getTaskDetails = createAsyncThunk(
+    "task/getTaskDetails",
+    async ({ptSequence}, thunkApi) => {
+        try {
+            const response = await axios.get(
+                `/api/v1/backlog/taskDetails/${ptSequence}`,
+            );
+            console.log("Task Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);

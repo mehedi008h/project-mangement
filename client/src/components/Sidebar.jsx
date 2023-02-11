@@ -17,7 +17,6 @@ const Sidebar = () => {
             bg="blackAlpha.600"
             py={4}
             width="300px"
-            wi
             height="100vh"
             spacing={7}
             position="fixed"

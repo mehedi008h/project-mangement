@@ -11,6 +11,7 @@ import com.example.taskmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -68,6 +69,21 @@ public class ProjectService {
         if (!project.getProjectLeader().equals(username)) {
             throw new ProjectNotFoundException("Project not found in your account!");
         }
+        return project;
+    }
+
+    // find project developer
+    public Project findProjectByDeveloper(String projectId, String username) {
+        Project project = projectRepository.findByProjectIdentifier(projectId);
+        if (project == null) {
+            throw new ProjectIdException("Project ID " + projectId + " doesn't exist!");
+        }
+
+        // checking project assigned developer
+        project.getUsers().stream().filter(user -> user.getEmail().equals(username))
+                .findAny()
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found in your account!"));
+
         return project;
     }
 

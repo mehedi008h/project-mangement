@@ -9,8 +9,8 @@ import lombok.*;
 
 import java.util.*;
 
-@Data
-@Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

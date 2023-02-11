@@ -23,13 +23,13 @@ import {RiAttachment2} from "react-icons/ri";
 import NewTask from "../forms/NewTask";
 import UsersCard from "./UsersCard";
 import {useDispatch, useSelector} from "react-redux";
-import {getUsers} from "../../app/service/authService";
+import {getUsers} from "../../app/service/userService";
 import {toast} from "react-hot-toast";
 import {reset} from "../../app/features/authSlice";
 
 const ProjectDetailsCard = ({project}) => {
     const [developerModal, setDeveloperModal] = useState(false);
-    const {loading, error, users} = useSelector((state) => state.auth);
+    const {loading, error, users} = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
     // open & close modal

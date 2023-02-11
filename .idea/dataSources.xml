@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="projectmanager@localhost" uuid="63cadffd-21f0-4c5f-80d0-e64543222a89">
+    <data-source source="LOCAL" name="task-management/Hibernate" uuid="df492122-739d-44d2-b4e1-4c92164b96fc">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/projectmanager</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>

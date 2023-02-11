@@ -1,7 +1,10 @@
 package com.example.taskmanagement.service;
 
+import com.example.taskmanagement.exceptions.ProjectIdException;
 import com.example.taskmanagement.exceptions.ProjectNotFoundException;
+import com.example.taskmanagement.exceptions.TaskNotFoundException;
 import com.example.taskmanagement.modal.Backlog;
+import com.example.taskmanagement.modal.Project;
 import com.example.taskmanagement.modal.Task;
 import com.example.taskmanagement.modal.User;
 import com.example.taskmanagement.repository.BacklogRepository;
@@ -10,6 +13,8 @@ import com.example.taskmanagement.repository.TaskRepository;
 import com.example.taskmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -56,14 +61,15 @@ public class TaskService {
         return taskRepository.save(projectTask);
     }
 
-    // get project backlog
+    // get project backlog for all assigned developer
     public Iterable<Task> findBacklogById(String backlogId, String username) {
-        System.out.println(backlogId);
-        projectService.findProjectByIdentifier(backlogId, username);
+        // checking project leader
+        projectService.findProjectByDeveloper(backlogId, username);
         return taskRepository.findByProjectIdentifierOrderByPriority(backlogId);
     }
 
     // find task by project sequence
+    // only available for project leader
     public Task findPTByProjectSequence(String backlog_id, String pt_id, String username) {
         // make sure searching an existing backlog
         projectService.findProjectByIdentifier(backlog_id, username);
@@ -79,6 +85,14 @@ public class TaskService {
             throw new ProjectNotFoundException("Project Task '" + pt_id + "' does not exist in this project!");
         }
 
+        return task;
+    }
+
+    // find task by task id & assigned user
+    public Task findTaskByTaskSequence(String projectSequence, String username) {
+        // find task by projectSequence
+        Task task = taskRepository.findByProjectSequence(projectSequence);
+        projectService.findProjectByDeveloper(task.getProjectIdentifier(), username);
         return task;
     }
 

@@ -51,6 +51,14 @@ public class BacklogController {
         return new ResponseEntity<Task>(projectTask, HttpStatus.OK);
     }
 
+    // find task by task sequence
+    @GetMapping("/taskDetails/{pt_sequence}")
+    public ResponseEntity<?> getTask(@PathVariable String pt_sequence, Principal principal) {
+        Task projectTask = taskService.findTaskByTaskSequence(pt_sequence, principal.getName());
+
+        return new ResponseEntity<Task>(projectTask, HttpStatus.OK);
+    }
+
     // update project task
     @PatchMapping("/{backlog_id}/{pt_id}")
     public ResponseEntity<?> updateProjectTask(
