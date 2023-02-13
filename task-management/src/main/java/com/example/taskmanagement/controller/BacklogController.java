@@ -88,4 +88,12 @@ public class BacklogController {
         return taskService.findAllTaskByUser(principal.getName());
     }
 
+    // update task status
+    @PutMapping("/update-status/{task_id}")
+    public ResponseEntity<?> updateTaskStatus(@PathVariable String task_id, @RequestBody Integer status, Principal principal) {
+        System.out.println("Task Id" + status + " Status " + task_id);
+        Task updateTask = taskService.updateStatus(task_id, status, principal.getName());
+        return new ResponseEntity<Task>(updateTask, HttpStatus.OK);
+    }
+
 }

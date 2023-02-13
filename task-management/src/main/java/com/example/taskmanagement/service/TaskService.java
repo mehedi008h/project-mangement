@@ -113,4 +113,15 @@ public class TaskService {
     public Iterable<Task> findAllTaskByUser(String username) {
         return taskRepository.findByUserEmail(username);
     }
+
+    // update task status
+    public Task updateStatus(String task_id, Integer status, String username) {
+        Task task = taskRepository.findByProjectSequence(task_id);
+
+        if(!task.getUser().getEmail().equals(username)) {
+            throw new TaskNotFoundException("Project Task '" + task_id + "' does not exist in your account!");
+        }
+        task.setStatus(status == 2 ? "PROGRESS" : "COMPLETED");
+        return taskRepository.save(task);
+    }
 }

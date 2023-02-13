@@ -1,10 +1,9 @@
 import React from "react";
 import {
-    Badge,
+    Badge, Box,
     Flex,
     Grid,
     GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay,
-    Stack,
     Text, useDisclosure,
 } from "@chakra-ui/react";
 import {
@@ -12,18 +11,34 @@ import {
     IoCheckmarkDoneCircleSharp,
 } from "react-icons/io5";
 import {IoIosArrowForward} from "react-icons/io";
-import {MdOutlineTimer} from "react-icons/md";
+import {MdOutlineNextPlan, MdOutlineTimer} from "react-icons/md";
 import {GiSandsOfTime} from "react-icons/gi";
 import moment from "moment";
 import {TaskDetails} from "../index";
+import {useDispatch} from "react-redux";
+import {updateTaskStatus} from "../../app/service/taskService";
 
-const TableContent = ({task}) => {
+const TableContent = ({task, developer}) => {
     // open & close modal
     const {isOpen, onOpen, onClose} = useDisclosure();
+    const dispatch = useDispatch();
+
     // calculate days
     let a = moment(task?.dueDate);
     let b = moment(task?.createdAt);
     let remaining = a.diff(b, 'days');
+
+    const {projectSequence} = task;
+
+    const handleStatus = () => {
+        let status;
+        if (task?.status === "TO_DO") {
+            status = 2;
+        } else {
+            status = 3;
+        }
+        dispatch(updateTaskStatus({status, projectSequence}))
+    }
 
     return (
         <Grid
@@ -90,11 +105,18 @@ const TableContent = ({task}) => {
                 display="flex"
                 alignItems="center"
                 justifyContent="start"
-                pl={3}
+                px={3}
             >
-                <Stack direction="row">
-                    <Badge px={4} py={1} colorScheme="red">{task?.status}</Badge>
-                </Stack>
+                <Flex w="100%" justifyContent="space-between" alignItems="center">
+                    <Badge px={4} py={1} colorScheme={task?.status === "PROGRESS" ? "yellow"
+                        : task?.status === "COMPLETED" ? "green" : "red"}>{task?.status}</Badge>
+                    {
+                        developer && <Box _hover={{color: "green"}} cursor="pointer">
+                            <MdOutlineNextPlan onClick={handleStatus} size={18}/>
+                        </Box>
+                    }
+
+                </Flex>
             </GridItem>
             <GridItem
                 w="100%"

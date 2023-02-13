@@ -71,10 +71,37 @@ export const getTaskDetails = createAsyncThunk(
 // get all task of user
 export const getUserTask = createAsyncThunk(
     "task/getUserTask",
-    async ( thunkApi) => {
+    async (thunkApi) => {
         try {
             const response = await axios.get(
                 `/api/v1/backlog/all_task`,
+            );
+            console.log("Task Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);
+
+// update task status
+export const updateTaskStatus = createAsyncThunk(
+    "task/updateTaskStatus",
+    async ({status, projectSequence}, thunkApi) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            };
+            const response = await axios.put(
+                `/api/v1/backlog/update-status/${projectSequence}`,
+                status,
+                config
             );
             console.log("Task Response:", response.data);
             if (response.data.statusCode === 400) {

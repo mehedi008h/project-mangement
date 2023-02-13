@@ -8,9 +8,9 @@ const AllTask = ({tasks, taskLoading}) => {
             {/*to_do */}
             <Box bg="blackAlpha.600" rounded={"md"} py={4}>
                 <Flex justifyContent="space-between" alignItems="center" px={4}>
-                    <Text fontWeight="semibold" fontSize={18} >TO_DO Task</Text>
+                    <Text fontWeight="semibold" fontSize={18}>TO_DO Task</Text>
                     {
-                        taskLoading &&  <Spinner />
+                        taskLoading && <Spinner/>
                     }
                 </Flex>
                 <TaskHeader/>
@@ -21,31 +21,7 @@ const AllTask = ({tasks, taskLoading}) => {
                                 tasks?.filter((task) => {
                                     return task.status === "TO_DO"
                                 }).map((task) => (
-                                    <TableContent key={task?.id} task={task}/>
-                                ))
-                            }
-                        </Fragment>
-                    )
-                }
-            </Box>
-
-            {/*progress */}
-            <Box bg="blackAlpha.600" rounded={"md"} py={4}>
-               <Flex justifyContent="space-between" alignItems="center" px={4}>
-                   <Text fontWeight="semibold" fontSize={18} >PROGRESS Task</Text>
-                   {
-                       taskLoading &&  <Spinner color='yellow.500'/>
-                   }
-               </Flex>
-                <TaskHeader/>
-                {
-                    taskLoading ? <Spinner/> : (
-                        <Fragment>
-                            {
-                                tasks?.filter((task) => {
-                                    return task.status === "PROGRESS"
-                                }).map((task) => (
-                                    <TableContent key={task?.id} task={task}/>
+                                    <TableContent developer key={task?.id} task={task}/>
                                 ))
                             }
                         </Fragment>
@@ -56,9 +32,33 @@ const AllTask = ({tasks, taskLoading}) => {
             {/*progress */}
             <Box bg="blackAlpha.600" rounded={"md"} py={4}>
                 <Flex justifyContent="space-between" alignItems="center" px={4}>
-                    <Text fontWeight="semibold" fontSize={18} >COMPLETED Task</Text>
+                    <Text fontWeight="semibold" fontSize={18}>PROGRESS Task</Text>
                     {
-                        taskLoading &&  <Spinner color='green.500'/>
+                        taskLoading && <Spinner color='yellow.500'/>
+                    }
+                </Flex>
+                <TaskHeader/>
+                {
+                    taskLoading ? <Spinner/> : (
+                        <Fragment>
+                            {
+                                tasks?.filter((task) => {
+                                    return task.status === "PROGRESS"
+                                }).map((task) => (
+                                    <TableContent developer key={task?.id} task={task}/>
+                                ))
+                            }
+                        </Fragment>
+                    )
+                }
+            </Box>
+
+            {/*progress */}
+            <Box bg="blackAlpha.600" rounded={"md"} py={4}>
+                <Flex justifyContent="space-between" alignItems="center" px={4}>
+                    <Text fontWeight="semibold" fontSize={18}>COMPLETED Task</Text>
+                    {
+                        taskLoading && <Spinner color='green.500'/>
                     }
                 </Flex>
                 <TaskHeader/>
@@ -69,7 +69,7 @@ const AllTask = ({tasks, taskLoading}) => {
                                 tasks?.filter((task) => {
                                     return task.status === "COMPLETED"
                                 }).map((task) => (
-                                    <TableContent  key={task?.id} task={task}/>
+                                    <TableContent key={task?.id} task={task}/>
                                 ))
                             }
                         </Fragment>
