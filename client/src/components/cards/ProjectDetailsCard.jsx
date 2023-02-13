@@ -26,6 +26,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getUsers} from "../../app/service/userService";
 import {toast} from "react-hot-toast";
 import {reset} from "../../app/features/authSlice";
+import {Link} from "react-router-dom";
 
 const ProjectDetailsCard = ({project}) => {
     const [developerModal, setDeveloperModal] = useState(false);
@@ -60,12 +61,12 @@ const ProjectDetailsCard = ({project}) => {
                     <Button onClick={() => handleModal("developer")} colorScheme="teal" size="sm">
                         Assign Developer
                     </Button>
-                    <Button onClick={() => handleModal("task")} colorScheme="green" size="sm">
+                    <Button  onClick={() => handleModal("task")} colorScheme="green" size="sm">
                         Add Task
                     </Button>
-                    <Button colorScheme="yellow" size="sm">
-                        Update Project
-                    </Button>
+                    <Link to={`/project/update/${project?.projectIdentifier}`}>
+                        <Button colorScheme="yellow" size="sm">Update Project</Button>
+                    </Link>
                     <Button colorScheme="red" size="sm">
                         Delete Project
                     </Button>

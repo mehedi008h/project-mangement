@@ -11,9 +11,6 @@ import com.example.taskmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.Set;
-
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -21,6 +18,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final BacklogRepository backlogRepository;
     private final UserRepository userRepository;
+    private final CloudinaryService cloudinaryService;
 
     // save & update project
     public Project saveOrUpdateProject(Project project, String username) {
@@ -111,4 +109,14 @@ public class ProjectService {
         projectRepository.delete(findProjectByIdentifier(projectId, username));
     }
 
+    // update project
+    public Project updateProjectById(String projectId, Project updateProject, String username) {
+        // find project & check project leader
+        Project project = findProjectByIdentifier(projectId, username);
+        project.setProjectName(updateProject.getProjectName());
+        project.setDescription(updateProject.getDescription());
+        project.setStart_date(updateProject.getStart_date());
+        project.setEnd_date(updateProject.getEnd_date());
+        return projectRepository.save(project);
+    }
 }

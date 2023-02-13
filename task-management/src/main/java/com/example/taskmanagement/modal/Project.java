@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.util.*;
 
+@ToString
 @Setter
 @Getter
 @NoArgsConstructor

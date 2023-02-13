@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,6 +61,21 @@ public class ProjectController {
         return projectService.findAllProjects(principal.getName());
     }
 
+    // update project by id
+    @PutMapping("/update/{projectId}")
+    public ResponseEntity<?> updateProject(
+            @Valid
+            @PathVariable String projectId,
+            @RequestBody Project project,
+            BindingResult result,
+            Principal principal
+    ) {
+        ResponseEntity<?> errorMap = validationErrorService.ValidationService(result);
+        if (errorMap != null) return errorMap;
+        Project updateProject = projectService.updateProjectById(projectId, project, principal.getName());
+        return new ResponseEntity<Project>(updateProject, HttpStatus.OK);
+    }
+
     // delete project by identifier
     @DeleteMapping("/{projectId}")
     public ResponseEntity<?> deleteProject(@PathVariable String projectId, Principal principal) {
@@ -66,5 +83,4 @@ public class ProjectController {
 
         return new ResponseEntity<String>("Project with Id " + projectId + " was deleted.", HttpStatus.OK);
     }
-
 }

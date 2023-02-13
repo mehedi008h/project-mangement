@@ -9,7 +9,7 @@ import {
     Stack, Tag,
     Textarea,
 } from "@chakra-ui/react";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useDispatch, useSelector} from "react-redux";

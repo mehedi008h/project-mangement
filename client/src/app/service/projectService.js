@@ -87,3 +87,31 @@ export const getProjectDetails = createAsyncThunk(
         }
     }
 );
+
+// update project
+export const updateProject = createAsyncThunk(
+    "project/updateProject",
+    async ({projectIdentifier, values}, thunkApi) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            };
+            console.log("Request Data:", values)
+            const response = await axios.put(
+                `/api/v1/project/update/${projectIdentifier}`,
+                 values,
+                config
+            );
+            console.log("Project Response:", response.data);
+            if (response.data.statusCode === 400) {
+                return thunkApi.rejectWithValue(response.data);
+            }
+            return response.data;
+        } catch (error) {
+            const message = error?.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);
