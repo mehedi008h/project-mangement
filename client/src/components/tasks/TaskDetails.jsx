@@ -3,27 +3,20 @@ import {Avatar, Box, Divider, Flex, Select, Stack, Text} from "@chakra-ui/react"
 import {GiSandsOfTime} from "react-icons/gi";
 import {MdOutlineTimer} from "react-icons/md";
 import {useDispatch, useSelector} from "react-redux";
-import {getTaskDetails} from "../../app/service/taskService";
 import moment from "moment/moment";
 import {FcHighPriority, FcLowPriority, FcMediumPriority} from "react-icons/fc";
 import {SiStatuspage} from "react-icons/si";
 import {getUserDetails} from "../../app/service/userService";
 
-const TaskDetails = ({ptSequence}) => {
-    const {loading, error, task} = useSelector((state) => state.task);
-    const {user} = useSelector((state) => state.user);
+const TaskDetails = ({email, task}) => {
+    const {user, loading} = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
 
-    const {assignBy: email} = task;
     // calculate days
     let a = moment(task?.dueDate);
     let b = moment(task?.createdAt);
     let remaining = a.diff(b, 'days');
-
-    useEffect(() => {
-        dispatch(getTaskDetails({ptSequence}))
-    }, [dispatch, ptSequence]);
 
     useEffect(() => {
         if (task) {
@@ -96,13 +89,18 @@ const TaskDetails = ({ptSequence}) => {
             </Stack>
             <Divider my={2}/>
             <Text>Assigned By</Text>
-            <Flex alignItems="center" gap={3} my={2}>
-                <Avatar name={user?.name}/>
-                <Box>
-                    <Text>{user?.name}</Text>
-                    <Text fontSize={14}>Software Engineer</Text>
-                </Box>
-            </Flex>
+            {
+                loading ? "" : (
+                    <Flex alignItems="center" gap={3} my={2}>
+                        <Avatar name={user?.name}/>
+                        <Box>
+                            <Text>{user?.name}</Text>
+                            <Text fontSize={14}>Software Engineer</Text>
+                        </Box>
+                    </Flex>
+                )
+            }
+
         </Box>
     );
 };

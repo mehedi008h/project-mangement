@@ -74,7 +74,7 @@ const TableContent = ({task}) => {
                                     <ModalHeader>Task Details</ModalHeader>
                                     <ModalCloseButton/>
                                     <ModalBody>
-                                        <TaskDetails ptSequence={task?.projectSequence}/>
+                                        <TaskDetails email={task?.assignBy} task={task}/>
                                     </ModalBody>
                                 </ModalContent>
                             </Modal>

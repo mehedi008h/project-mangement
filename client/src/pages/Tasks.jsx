@@ -21,7 +21,7 @@ const Tasks = () => {
             </Box>
             <Box className="header" marginRight="15px">
                 <Header/>
-                <AllTask/>
+                <AllTask tasks={tasks} taskLoading={loading}/>
             </Box>
         </Flex>
     );
