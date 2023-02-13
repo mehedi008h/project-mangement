@@ -14,6 +14,7 @@ import TableContent from "./tasks/TableContent";
 import NewTask from "./forms/NewTask";
 import TaskDetails from "./tasks/TaskDetails";
 import UpdateProjectForm from "./forms/UpdateProjectForm";
+import AllTask from "./tasks/AllTask";
 
 export {
     Header,
@@ -31,5 +32,6 @@ export {
     TableContent,
     NewTask,
     TaskDetails,
-    UpdateProjectForm
+    UpdateProjectForm,
+    AllTask
 };

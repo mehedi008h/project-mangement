@@ -108,4 +108,9 @@ public class TaskService {
         Task projectTask = findPTByProjectSequence(backlog_id, pt_id, username);
         taskRepository.delete(projectTask);
     }
+
+    // find all task of a user
+    public Iterable<Task> findAllTaskByUser(String username) {
+        return taskRepository.findByUserEmail(username);
+    }
 }

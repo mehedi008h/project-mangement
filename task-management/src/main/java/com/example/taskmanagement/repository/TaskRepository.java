@@ -12,4 +12,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 
     // find task by project sequence
     Task findByProjectSequence(String sequence);
+
+    // find all task of a user
+    List<Task> findByUserEmail(String email);
 }

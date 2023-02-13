@@ -82,4 +82,10 @@ public class BacklogController {
         return new ResponseEntity<String>("Project Task '" + pt_id + "' was deleted successfully", HttpStatus.OK);
     }
 
+    // find all task of a user
+    @GetMapping("/all_task")
+    public Iterable<Task> getAllTaskOfUser(Principal principal) {
+        return taskService.findAllTaskByUser(principal.getName());
+    }
+
 }
