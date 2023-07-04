@@ -1,6 +1,6 @@
-### Full Stack Task Management App with React.js 18 & Spring Boot 3 : React, Chakra, Postgresql, Redux, Hibernate, Spring Security
+## Full Stack Task Management App with React.js 18 & Spring Boot 3 : React, Chakra, Postgresql, Redux, Hibernate, Spring Security
 
-#### Features:
+### Features:
 - Chakra design
 - Full responsiveness
 - Redux as state management
@@ -15,16 +15,16 @@
 - Developer can update task status
 - Customizable developer profile
 
-#### Prerequisites
+### Prerequisites
 - Node version 14.x
 - Java  jdk version 17
 
-#### Cloning the repository
+### Cloning the repository
 ```
 git clone https://github.com/mehedi008h/project-mangement.git
 ```
 
-#### Install Client packages
+### Install Client packages
 
 ```
 cd/client npm install or yarn
